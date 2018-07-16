@@ -1,8 +1,20 @@
+require('dotenv').config();
+
 import * as express from 'express';
+import * as parser from 'body-parser';
 
-const app = express();
-const port = process.env.PORT || 3000;
+import { navigationRouter } from './api/routes/navigation';
+import { linkRouter } from './api/routes/link';
 
-app.listen(port);
+const app: express.Express = express();
+const port: number = parseInt(process.env.PORT, 10) || 3000;
 
-console.log('server started on: ' + port);
+app.use(parser.json());
+app.use(parser.urlencoded({ extended: false }));
+
+app.use('/navigation', navigationRouter);
+app.use('/link', linkRouter);
+
+app.listen(port, () => {
+  console.log('server started on: ' + port);
+});
