@@ -1,18 +1,27 @@
 import * as React from 'react';
 import './App.css';
 
-import logo from './logo.svg';
+import { Link } from './components/link/';
+
+import logoSvg from './logo.svg';
 
 class App extends React.Component {
   public render() {
     return (
       <div className="App">
         <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
+          <img src={logoSvg} className="App-logo" alt="logo" />
           <h1 className="App-title">Welcome to React</h1>
         </header>
         <p className="App-intro">
           To get started, edit <code>src/App.tsx</code> and save to reload.
+          <Link
+              id='akdsfhasadjsfha;'
+              title='Home'
+              link_url='https://www.google.com'
+              navigation_name='local'
+              order={5}
+          />
         </p>
       </div>
     );

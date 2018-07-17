@@ -1,3 +1,63 @@
+@font-face {
+	font-family: 'SFProText';
+    font-weight: normal;
+	src: local('SF Pro Text'),
+        url(./fonts/SF-Pro-Text-Regular.eot) format('eot'),
+        url(./fonts/SF-Pro-Text-Regular.otf) format('opentype'),
+        url(./fonts/SF-Pro-Text-Regular.woff) format('woff'),
+        url(./fonts/SF-Pro-Text-Regular.ttf) format('truetype');
+}
+
+@font-face {
+    font-family: 'SFProText';
+    font-weight: bold;
+    src: local('SF Pro Text'),
+		url(./fonts/SF-Pro-Text-Bold.eot) format('eot'),
+		url(./fonts/SF-Pro-Text-Bold.otf) format('opentype'),
+        url(./fonts/SF-Pro-Text-Bold.woff) format('woff'),
+		url(./fonts/SF-Pro-Text-Bold.ttf) format('truetype');
+}
+
+.style1 {
+    font-family: 'SFProText';
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 24px;
+}
+
+.style2 {
+    font-family: 'SFProText';
+    font-weight: bold;
+    font-size: 14px;
+    text-align: center;
+}
+
+.style3 {
+    font-family: 'SFProText';
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 24px;
+}
+
+.style4 {
+    font-family: 'SFProText';
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 18px;
+}
+
+.style5 {
+    font-family: 'SFProText';
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 18px;
+    text-align: right;
+}
+
+.hidden {
+	display: none;
+}
+
 body {
   margin: 0;
   padding: 0;
