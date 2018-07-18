@@ -1,0 +1,17 @@
+.navigation {
+	width: 315px;
+	background-color: #f5f5f5;
+}
+
+.navigation-header {
+	background-color: #d3d3d3;
+	padding: 3px;
+}
+
+.navigation-link {
+	padding: 8px 3px;
+}
+
+.navigation-add-link {
+	cursor: pointer;
+}
