@@ -14,34 +14,34 @@ import trashSvg from '../../images/trash.svg';
 
 import './style.css';
 
-interface Iprops {
+interface IProps {
 	id: string;
 	title?: string | undefined;
-	navigation_name: string;
-	link_url?: string | undefined;
-	image_url?: string | undefined;
+	navigationName: string;
+	linkUrl?: string | undefined;
+	imageUrl?: string | undefined;
 	order: number;
 	canHaveImage: boolean;
 	handleDelete(): void;
 	handleSave(): void;
 }
 
-interface Istate {
+interface IState {
 	isEditing: boolean;
 	title?: string | undefined;
-	link_url?: string | undefined;
-	image_url?: string | undefined;
+	linkUrl?: string | undefined;
+	imageUrl?: string | undefined;
 }
 
-export class Link extends React.Component<Iprops, Istate> {
-	constructor(props: Iprops) {
+export class Link extends React.Component<IProps, IState> {
+	constructor(props: IProps) {
 		super(props);
 		this.handleEdit = this.handleEdit.bind(this);
 		this.handleChange = this.handleChange.bind(this);
 		this.state = {
-			image_url: this.props.image_url,
+			imageUrl: this.props.imageUrl,
 			isEditing: false,
-			link_url: this.props.link_url,
+			linkUrl: this.props.linkUrl,
 			title: this.props.title,
 		};
 	}
@@ -98,18 +98,18 @@ export class Link extends React.Component<Iprops, Istate> {
 						<FormGroup>
 							<ControlLabel>Link URL</ControlLabel>
 							<FormControl
-								name="link_url"
+								name="linkUrl"
 								type="text"
-								value={this.state.link_url}
+								value={this.state.linkUrl}
 							/>
 						</FormGroup>
 						{this.props.canHaveImage && (
 							<FormGroup>
 								<ControlLabel>Link Image</ControlLabel>
 								<FormControl
-									name="image_url"
+									name="imageUrl"
 									type="text"
-									value={this.state.image_url}
+									value={this.state.imageUrl}
 								/>
 							</FormGroup>
 						)}
