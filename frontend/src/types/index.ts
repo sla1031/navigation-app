@@ -14,15 +14,27 @@ export interface ILinkDB {
     order: number;
 }
 
+export interface ILinkComponent {
+    id: string;
+    title: string;
+    navigationName: string;
+    linkUrl: string;
+    imageUrl?: string;
+    order: number;
+    canHaveImage: boolean;
+}
+
 export interface INavigationComponent {
 	navigationName: string;
 	maxLength: number;
 	minLength: number;
 	hasImage: boolean;
+  links: ILinkComponent[];
 }
 
 export interface IStoreState {
     navigations: INavigationDB[];
     navigationsAjaxloading: boolean;
     links: ILinkDB[];
+    linksAjaxLoading: boolean;
 }

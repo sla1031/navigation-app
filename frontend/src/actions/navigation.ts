@@ -8,13 +8,13 @@ export interface ISetNavigations {
     type: constants.SET_NAVIGATIONS;
 }
 
-export interface INavigationAjaxLoading {
+export interface INavigationsAjaxLoading {
   status: boolean;
-  type: constants.NAVIGATION_AJAX_LOADING;
+  type: constants.NAVIGATIONS_AJAX_LOADING;
 }
 
 export type INavigationAction = ISetNavigations;
-export type INavigationAjaxAction = INavigationAjaxLoading;
+export type INavigationAjaxAction = INavigationsAjaxLoading;
 
 export function setNavigations(navigations: INavigationDB[]): ISetNavigations {
     return {
@@ -23,28 +23,28 @@ export function setNavigations(navigations: INavigationDB[]): ISetNavigations {
     }
 }
 
-export function navigationAjaxLoading(status: boolean) {
+export function navigationsAjaxLoading(status: boolean) {
   return {
     status,
-    type: constants.NAVIGATION_AJAX_LOADING,
+    type: constants.NAVIGATIONS_AJAX_LOADING,
   }
 }
 
 export function getNavigations(): any {
   return (dispatch: Dispatch) => {
-    dispatch(navigationAjaxLoading(true));
+    dispatch(navigationsAjaxLoading(true));
     // tslint:disable-next-line
-    axios.get('http://localhost:3000/navigation') // TODO
+    axios.get(`${process.env.REACT_APP_API_URL}/navigation`)
       .then((res) => {
          // tslint:disable-next-line
          console.log('getnavigations', res);
         dispatch(setNavigations(res.data));
-        dispatch(navigationAjaxLoading(false));
+        dispatch(navigationsAjaxLoading(false));
       })
       .catch((err) => {
         // tslint:disable-next-line
         console.log('getnavigations', err);
-        dispatch(navigationAjaxLoading(false));
+        dispatch(navigationsAjaxLoading(false));
       });
   }
 }

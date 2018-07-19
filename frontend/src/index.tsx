@@ -2,6 +2,7 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 
+import { getLinks } from './actions/link';
 import { getNavigations } from './actions/navigation';
 import configureStore from './store/configureStore';
 
@@ -12,6 +13,7 @@ import registerServiceWorker from './registerServiceWorker';
 
 const store = configureStore();
 store.dispatch(getNavigations());
+store.dispatch(getLinks());
 
 ReactDOM.render(
   <Provider store={store}>

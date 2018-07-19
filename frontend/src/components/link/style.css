@@ -3,16 +3,23 @@
 	background: #ffffff;
 	border: 1px solid #dedede;
 	border-radius: 2px;
+  margin-bottom: 10px;
 }
 
 .link-display {
-	padding: 0 0 0 5px;
+	padding: 0 0 0 10px;
 }
+
+.link-title {
+  font-weight: bold;
+}
+
 .link-menu {
 	float: right;
+  margin-right: 5px;
 }
 .link-menu img {
-	height: 25px;
+	height: 20px;
 }
 
 .link-menu .btn-default.dropdown-toggle {

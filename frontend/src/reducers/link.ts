@@ -1,5 +1,5 @@
-import { ILinkAction } from '../actions/link';
-import { CREATE_LINK, DELETE_LINK, LOAD_LINKS_SUCCESS, UPDATE_LINK } from '../constants/link';
+import { ILinkAction, ILinkAjaxAction } from '../actions/link';
+import { CREATE_LINK, DELETE_LINK, LINKS_AJAX_LOADING, SET_LINKS, UPDATE_LINK } from '../constants/link';
 import initialState from '../store/initialState';
 import { ILinkDB } from '../types/';
 
@@ -27,8 +27,18 @@ export function linkReducer(state: ILinkDB[] = initialState.links, action: ILink
 				// TODO
 			]
 		}
-		case LOAD_LINKS_SUCCESS: {
+		case SET_LINKS: {
 			return action.links;
+		}
+		default:
+			return state;
+	}
+}
+
+export function linkAjaxReducer(state: boolean  = initialState.linksAjaxLoading, action: ILinkAjaxAction): boolean {
+	switch(action.type) {
+		case LINKS_AJAX_LOADING: {
+			return action.status;
 		}
 		default:
 			return state;

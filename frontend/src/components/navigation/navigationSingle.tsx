@@ -1,12 +1,16 @@
 import * as React from 'react';
 
+import { ILinkComponent } from '../../types';
+import { LinkList } from '../link';
+
 import './style.css';
 
 interface Iprops {
-	navigationName: string;
+  hasImage: boolean;
+  links: ILinkComponent[];
 	maxLength: number;
 	minLength: number;
-	hasImage: boolean;
+	navigationName: string;
 	handleNew(): void;
 }
 
@@ -30,7 +34,7 @@ export class Navigation extends React.Component<Iprops, any> {
 					<a className="navigation-add-link pull-right" onClick={this.props.handleNew}>+ item</a>
 				</div>
 				<div className="navigation-link">
-					{this.props.children}
+          <LinkList links={this.props.links} />
 				</div>
 
 			</div>

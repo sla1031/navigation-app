@@ -19,6 +19,7 @@ export const NavigationList = ({navigations}: IProps) => {
 				return (
 					<Navigation
 						key={nav.navigationName}
+            links={nav.links}
 						navigationName={nav.navigationName}
 						maxLength={nav.maxLength}
 						minLength={nav.minLength}

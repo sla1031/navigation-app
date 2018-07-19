@@ -7,5 +7,9 @@ export type UPDATE_LINK = typeof UPDATE_LINK;
 export const DELETE_LINK = 'DELETE_LINK';
 export type DELETE_LINK = typeof DELETE_LINK;
 
-export const LOAD_LINKS_SUCCESS = 'LOAD_LINKS_SUCCESS';
-export type LOAD_LINKS_SUCCESS = typeof LOAD_LINKS_SUCCESS;
+export const SET_LINKS = 'SET_LINKS';
+export type SET_LINKS = typeof SET_LINKS;
+
+
+export const LINKS_AJAX_LOADING = 'LINKS_AJAX_LOADING';
+export type LINKS_AJAX_LOADING = typeof LINKS_AJAX_LOADING;
