@@ -9,7 +9,7 @@ type link = {
 };
 
 export function getLinksByNavigation(navigation: string) {
-  return knex('link').select().where({ navigation_name: navigation });
+  return knex('link').select().where({ navigation_name: navigation }).orderBy('order');
 }
 
 export function getLinkByID(id: number) {
@@ -17,7 +17,7 @@ export function getLinkByID(id: number) {
 }
 
 export function getLinks() {
-  return knex('link').select();
+  return knex('link').select().orderBy('navigation_name', 'order');
 }
 
 export function updateLink(id: number, updatedLink: link) {
