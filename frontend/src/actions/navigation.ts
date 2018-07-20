@@ -8,7 +8,12 @@ export interface ISetNavigationsAction {
     type: constants.SET_NAVIGATIONS;
 }
 
-export type INavigationActionType = ISetNavigationsAction;
+export interface IUpdateNavigationAction {
+  navigation: INavigationDB;
+  type: constants.UPDATE_NAVIGATION;
+}
+
+export type INavigationActionType = ISetNavigationsAction | IUpdateNavigationAction;
 
 export interface INavigationsAjaxLoadingAction {
   status: boolean;
@@ -21,6 +26,13 @@ export function setNavigationsAction(navigations: INavigationDB[]): ISetNavigati
         navigations,
         type: constants.SET_NAVIGATIONS,
     }
+}
+
+export function updateNavigationAction(navigation: INavigationDB): IUpdateNavigationAction {
+  return {
+    navigation,
+    type: constants.UPDATE_NAVIGATION,
+  }
 }
 
 export function navigationsAjaxLoadingAction(status: boolean): INavigationsAjaxLoadingAction {
@@ -37,13 +49,13 @@ export function getNavigations(): any {
     axios.get(`${process.env.REACT_APP_API_URL}/navigation`)
       .then((res) => {
          // tslint:disable-next-line
-         console.log('getnavigations', res);
+         console.log('getNavigations', res);
         dispatch(setNavigationsAction(res.data));
         dispatch(navigationsAjaxLoadingAction(false));
       })
       .catch((err) => {
         // tslint:disable-next-line
-        console.log('getnavigations', err);
+        console.log('getNavigations', err);
         dispatch(navigationsAjaxLoadingAction(false));
       });
   }

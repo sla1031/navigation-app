@@ -2,10 +2,10 @@ import * as Knex from 'knex';
 
 export function seed(knex: Knex): Promise<any> {
   // Deletes ALL existing entries
-  return knex('navigation').del()
+  return knex('navigation_type').del()
     .then(() => {
       // Inserts seed entries
-      return knex('navigation').insert([
+      return knex('navigation_type').insert([
         {
           name: 'local',
           max_length: 5,

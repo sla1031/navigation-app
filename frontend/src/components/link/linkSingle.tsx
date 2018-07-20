@@ -18,7 +18,7 @@ import './style.css';
 interface IProps {
 	id: string;
 	title: string;
-	navigationName: string;
+	navigation: string;
 	linkUrl: string;
 	imageUrl?: string;
 	order: number;
@@ -69,7 +69,7 @@ export class Link extends React.Component<IProps, IState> {
       id: this.props.id,
       imageUrl: this.state.imageUrl,
       linkUrl: this.state.linkUrl,
-      navigationName: this.props.navigationName,
+      navigation: this.props.navigation,
       order: this.props.order,
       title: this.state.title,
     });

@@ -1,45 +1,38 @@
 import * as express from 'express';
+import { assign } from 'lodash';
+
 import * as linkController from '../controllers/link';
+import { convertToCamelCase, convertSingleToUnderscore } from '../../util';
 
 export const linkRouter: express.Router = express.Router();
 
 linkRouter.get('/', (req: express.Request, res: express.Response) => {
   linkController.getLinks().then((links) => {
     res.statusCode = 200;
-    res.send(links);
+    res.send(convertToCamelCase(links));
   });
 });
 
 linkRouter.get('/:id', (req: express.Request, res: express.Response) => {
-  linkController.getLinkByID(req.params.id).then((link) => {
+  linkController.getLinkByID(req.params.id).then((links) => {
     res.statusCode = 200;
-    res.send(link);
+    res.send(convertToCamelCase(links));
   });
 });
 
 linkRouter.post('/', (req: express.Request, res: express.Response) => {
-  linkController.newLink({
-    title: req.body.title,
-    link_url: req.body.link_url,
-    image_url: req.body.image_url,
-    navigation_name: req.body.navigation_name,
-    order: req.body.order,
-  }).then((createdlink) => {
+  const link = convertSingleToUnderscore(assign({}, req.body));
+  linkController.newLink(link).then((createdlink) => {
     res.statusCode = 201;
-    res.send(createdlink[0]);
+    res.send(convertToCamelCase(createdlink));
   });
 });
 
 linkRouter.patch('/:id', (req: express.Request, res: express.Response) => {
-  linkController.updateLink(req.params.id, {
-    title: req.body.title,
-    link_url: req.body.link_url,
-    image_url: req.body.image_url,
-    navigation_name: req.body.navigation_name,
-    order: req.body.order,
-  }).then((link) => {
+  const link = convertSingleToUnderscore(assign({}, req.body));
+  linkController.updateLink(req.params.id, link).then((links) => {
     res.statusCode = 200;
-    res.send(link);
+    res.send(convertToCamelCase(links));
   });
 });
 

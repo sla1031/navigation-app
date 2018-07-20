@@ -1,18 +1,18 @@
 import * as React from 'react';
 import { Glyphicon, OverlayTrigger, Tooltip } from 'react-bootstrap';
 
-import { ILinkComponent } from '../../types';
+import { ILinkComponent, INavigationType } from '../../types';
 import { LinkList } from '../link';
 
 import './style.css';
 
 interface Iprops {
-  hasImage: boolean;
+  id: string;
+  navigationTypeName: string;
   links: ILinkComponent[];
-	maxLength: number;
-	minLength: number;
-	navigationName: string;
-	handleNew(): void;
+	allNavigationTypes: INavigationType[];
+  navigationType: INavigationType;
+	handleNewLink(): void;
   handleLinkUpdate(link: ILinkComponent): void;
   handleLinkDelete(linkId: string): void;
 }
@@ -21,29 +21,30 @@ interface Iprops {
 
 export class Navigation extends React.Component<Iprops, any> {
 	public testsave() {
-        // tslint:disable-next-line
-        console.log('save');
-    }
+    // tslint:disable-next-line
+    console.log('save');
+  }
 
 	public onClickNew(event: any) {
-		this.props.handleNew();
+		this.props.handleNewLink();
 	}
 
 	public render() {
+    const { maxLength, minLength } = this.props.navigationType;
     const tooltip = (
       <Tooltip>
-        This navigation type can only hold {this.props.maxLength} link{(this.props.maxLength > 1) ? 's' : ''}
+        This navigation type can only hold {maxLength} link{(maxLength > 1) ? 's' : ''}
       </Tooltip>
     );
 
     // tslint:disable-next-line
-    console.log(`length ${this.props.links.length} min ${this.props.minLength}`);
+    console.log(`length ${this.props.links.length} min ${minLength}`);
 
 		return (
 			<div className="navigation">
 				<div className="navigation-header style4">
-					<span>{this.props.navigationName}</span>
-					{(this.props.links.length < this.props.maxLength) ?
+					<span>Navigation</span>
+					{(this.props.links.length < maxLength) ?
             <a className="navigation-add-link pull-right" onClick={this.onClickNew}>+ item</a>
             :
             <OverlayTrigger placement="right" overlay={tooltip}>

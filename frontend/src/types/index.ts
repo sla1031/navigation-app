@@ -1,38 +1,42 @@
+export interface INavigationType {
+	name: string;
+	maxLength: number;
+	minLength: number;
+	hasImage: boolean;
+}
+
 export interface INavigationDB {
-    name: string;
-    max_length: number;
-    min_length: number;
-    has_image: boolean;
+  id: string;
+	navigationType: string;
+}
+
+
+export interface INavigationComponent {
+  id: string;
+	navigationTypeName: string;
+  navigationType: INavigationType;
+  allNavigationTypes: INavigationType[];
+  links: ILinkComponent[];
 }
 
 export interface ILinkDB {
     id: string;
     title: string;
-    navigation_name: string;
-    link_url: string;
-    image_url?: string;
-    order: number;
-}
-
-export interface ILinkComponent {
-    id: string;
-    title: string;
-    navigationName: string;
+    navigation: string;
     linkUrl: string;
     imageUrl?: string;
     order: number;
+}
+
+
+export interface ILinkComponent extends ILinkDB{
     canHaveImage: boolean;
 }
 
-export interface INavigationComponent {
-	navigationName: string;
-	maxLength: number;
-	minLength: number;
-	hasImage: boolean;
-  links: ILinkComponent[];
-}
 
 export interface IStoreState {
+    navigationTypes: INavigationType[];
+    navigationTypesAjaxloading: boolean;
     navigations: INavigationDB[];
     navigationsAjaxloading: boolean;
     links: ILinkDB[];

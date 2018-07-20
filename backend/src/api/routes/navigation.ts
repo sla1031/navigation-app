@@ -1,16 +1,26 @@
 import * as express from 'express';
-import { getNavigations, getNavigationByName } from '../controllers/navigation';
+
+import { getNavigations, getNavigationById, updateNavigation } from '../controllers/navigation';
+import { convertToCamelCase, convertSingleToUnderscore } from '../../util';
 
 export const navigationRouter: express.Router = express.Router();
 
 navigationRouter.get('/', (req: express.Request, res: express.Response) => {
-  getNavigations().then((nav) => {
-    res.send(nav);
+  getNavigations().then((navs) => {
+    res.send(convertToCamelCase(navs));
   });
 });
 
-navigationRouter.get('/:name', (req: express.Request, res: express.Response) => {
-  getNavigationByName(req.params.name).then((nav) => {
-    res.send(nav);
+navigationRouter.get('/:id', (req: express.Request, res: express.Response) => {
+  getNavigationById(req.params.id).then((navs) => {
+    res.send(convertToCamelCase(navs));
+  });
+});
+
+navigationRouter.patch('/:id', (req: express.Request, res: express.Response) => {
+  const navigation = convertSingleToUnderscore(req.body);
+  updateNavigation(req.params.id, navigation).then((navs) => {
+    res.statusCode = 200;
+    res.send(convertToCamelCase(navs));
   });
 });
