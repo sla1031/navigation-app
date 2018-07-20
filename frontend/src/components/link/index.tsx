@@ -5,29 +5,20 @@ import { Link } from './linkSingle';
 
 export interface IProps {
 	links: ILinkComponent[];
+  handleUpdate(link: ILinkComponent): void;
+  handleDelete(linkId: string): void;
 }
 
-function test() {
-	// tslint:disable-next-line
-	console.log('test');
-}
-
-export const LinkList = ({links}: IProps) => {
+export const LinkList = ({links, handleUpdate, handleDelete}: IProps) => {
 	return (
 		<div className="link-lists">
 			{links.map((link) => {
 				return (
 					<Link
             key={link.id}
-            id={link.id}
-          	title={link.title}
-          	navigationName={link.navigationName}
-          	linkUrl={link.linkUrl}
-          	imageUrl={link.imageUrl}
-          	order={link.order}
-          	canHaveImage={link.canHaveImage}
-          	handleDelete={test}
-          	handleSave={test}
+            {...link}
+          	handleDelete={handleDelete}
+            handleUpdate={handleUpdate}
 					/>
 				);
 			})}

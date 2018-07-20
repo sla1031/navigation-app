@@ -1,10 +1,12 @@
 import * as React from 'react';
 
-import { INavigationComponent } from '../../types';
+import { ILinkComponent, INavigationComponent } from '../../types';
 import { Navigation } from './navigationSingle';
 
 export interface IProps {
 	navigations: INavigationComponent[];
+  handleLinkUpdate(link: ILinkComponent): void;
+  handleLinkDelete(linkId: string): void;
 }
 
 function testnew() {
@@ -12,19 +14,17 @@ function testnew() {
 	console.log('new');
 }
 
-export const NavigationList = ({navigations}: IProps) => {
+export const NavigationList = ({navigations, handleLinkUpdate, handleLinkDelete}: IProps) => {
 	return (
 		<div className="navigation-lists">
 			{navigations.map((nav) => {
 				return (
 					<Navigation
 						key={nav.navigationName}
-            links={nav.links}
-						navigationName={nav.navigationName}
-						maxLength={nav.maxLength}
-						minLength={nav.minLength}
-						hasImage={nav.hasImage}
-						handleNew={testnew}
+            {...nav}
+            handleNew={testnew}
+            handleLinkUpdate={handleLinkUpdate}
+            handleLinkDelete={handleLinkDelete}
 					/>
 				);
 			})}

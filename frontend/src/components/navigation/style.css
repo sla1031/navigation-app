@@ -1,3 +1,8 @@
+.navigation-lists {
+  display: flex;
+  align-items: start;
+}
+
 .navigation {
 	width: 315px;
 	background-color: #f5f5f5;

@@ -3,27 +3,27 @@ import { Dispatch } from 'redux';
 import * as constants from '../constants/navigation';
 import { INavigationDB } from '../types';
 
-export interface ISetNavigations {
+export interface ISetNavigationsAction {
     navigations: INavigationDB[];
     type: constants.SET_NAVIGATIONS;
 }
 
-export interface INavigationsAjaxLoading {
+export type INavigationActionType = ISetNavigationsAction;
+
+export interface INavigationsAjaxLoadingAction {
   status: boolean;
   type: constants.NAVIGATIONS_AJAX_LOADING;
 }
+export type INavigationAjaxActionType = INavigationsAjaxLoadingAction;
 
-export type INavigationAction = ISetNavigations;
-export type INavigationAjaxAction = INavigationsAjaxLoading;
-
-export function setNavigations(navigations: INavigationDB[]): ISetNavigations {
+export function setNavigationsAction(navigations: INavigationDB[]): ISetNavigationsAction {
     return {
         navigations,
         type: constants.SET_NAVIGATIONS,
     }
 }
 
-export function navigationsAjaxLoading(status: boolean) {
+export function navigationsAjaxLoadingAction(status: boolean): INavigationsAjaxLoadingAction {
   return {
     status,
     type: constants.NAVIGATIONS_AJAX_LOADING,
@@ -32,19 +32,19 @@ export function navigationsAjaxLoading(status: boolean) {
 
 export function getNavigations(): any {
   return (dispatch: Dispatch) => {
-    dispatch(navigationsAjaxLoading(true));
+    dispatch(navigationsAjaxLoadingAction(true));
     // tslint:disable-next-line
     axios.get(`${process.env.REACT_APP_API_URL}/navigation`)
       .then((res) => {
          // tslint:disable-next-line
          console.log('getnavigations', res);
-        dispatch(setNavigations(res.data));
-        dispatch(navigationsAjaxLoading(false));
+        dispatch(setNavigationsAction(res.data));
+        dispatch(navigationsAjaxLoadingAction(false));
       })
       .catch((err) => {
         // tslint:disable-next-line
         console.log('getnavigations', err);
-        dispatch(navigationsAjaxLoading(false));
+        dispatch(navigationsAjaxLoadingAction(false));
       });
   }
 }

@@ -1,7 +1,9 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
 
-// import * as navigationActions from '../../actions/navigation';
+
+import * as linkActions from '../actions/link';
 import { ILinkComponent, ILinkDB, INavigationComponent, INavigationDB, IStoreState } from '../types';
 
 import { NavigationList } from '../components/navigation';
@@ -10,6 +12,8 @@ interface IProps {
   navigations: INavigationComponent[];
 	navigationsAjaxloading: boolean;
   linksAjaxLoading: boolean;
+  handleLinkUpdate(link: ILinkComponent): void;
+  handleLinkDelete(linkId: string): void;
 }
 
 class NavigationContainer extends React.Component<IProps> {
@@ -19,17 +23,18 @@ class NavigationContainer extends React.Component<IProps> {
 
 	public render() {
 		return (
-			<div className="navigation-container">
-                {
-                    this.props.navigationsAjaxloading ?
-                        <p className="alert-info">Loading...</p>
-                        :
-                        <NavigationList
-                          navigations={this.props.navigations}
-
-                        />
-                }
-            </div>
+			<>
+        {
+          (this.props.navigationsAjaxloading || this.props.linksAjaxLoading) ?
+              <p className="alert-info">Loading...</p>
+              :
+              <NavigationList
+                navigations={this.props.navigations}
+                handleLinkUpdate={this.props.handleLinkUpdate}
+                handleLinkDelete={this.props.handleLinkDelete}
+              />
+        }
+      </>
 		);
 	}
 }
@@ -55,6 +60,16 @@ function linksConvertDBNamesAndFilter(links: ILinkDB[], navigationName: string, 
 	return linksForComponents;
 }
 
+function linkConvertComponentNames(link: ILinkComponent): ILinkDB {
+	return {
+    id: link.id,
+    image_url: link.imageUrl,
+    link_url: link.linkUrl,
+    navigation_name: link.navigationName,
+    order: link.order,
+    title: link.title,
+  }
+}
 
 function navigationConvertDBNames(navigations: INavigationDB[], links: ILinkDB[]): INavigationComponent[] {
 	let navigationsForComponents: INavigationComponent[] = [];
@@ -80,4 +95,11 @@ function mapStateToProps(state: IStoreState, ownProps: IProps) {
 	}
 }
 
-export const NavigationPage = connect(mapStateToProps)(NavigationContainer);
+function mapDispatchToProps(dispatch: Dispatch) {
+  return {
+    handleLinkDelete: (linkId: string) => dispatch(linkActions.deleteLink(linkId)),
+    handleLinkUpdate: (link: ILinkComponent) => dispatch(linkActions.updateLink(linkConvertComponentNames(link))),
+  }
+}
+
+export const NavigationPage = connect(mapStateToProps, mapDispatchToProps)(NavigationContainer);
