@@ -7,7 +7,7 @@ import {
 	MenuItem,
 } from 'react-bootstrap';
 
-import { ILinkComponent } from '../../types';
+import { ILinkDB } from '../../types';
 
 import arrowLeftSvg from '../../images/arrow-left.svg';
 import editSvg from '../../images/edit.svg';
@@ -23,15 +23,17 @@ interface IProps {
 	imageUrl?: string;
 	order: number;
 	canHaveImage: boolean;
+  canDeleteLink: boolean;
 	handleDelete(linkId: string): void;
-  handleUpdate(link: ILinkComponent): void;
+  handleUpdate(link: ILinkDB): void;
 }
 
 interface IState {
+  imageUrl?: string;
 	isEditing: boolean;
-	title: string;
 	linkUrl: string;
-	imageUrl?: string;
+  needsUpdating: boolean;
+	title: string;
 }
 
 export class Link extends React.Component<IProps, IState> {
@@ -45,6 +47,7 @@ export class Link extends React.Component<IProps, IState> {
 			imageUrl: this.props.imageUrl,
 			isEditing: false,
 			linkUrl: this.props.linkUrl,
+      needsUpdating: false,
 			title: this.props.title,
 		};
 	}
@@ -57,15 +60,25 @@ export class Link extends React.Component<IProps, IState> {
 	}
 
 	public onChangeEdit(event: any) {
-		const changedInfo:any = [];
-		changedInfo[event.target.name] = event.target.value;
-		// tslint:disable-next-line
-		console.log(changedInfo);
+    if (this.state[event.target.name] === event.target.value) {
+      return;
+    }
+
+  	const changedInfo:any = {
+      needsUpdating: true,
+    };
+  	changedInfo[event.target.name] = event.target.value;
 		this.setState(changedInfo);
 	}
+
   public onBlurEdit(event: any) {
+    if(!this.state.needsUpdating) {
+      return;
+    }
+    this.setState({
+      needsUpdating: false,
+    });
 		this.props.handleUpdate({
-      canHaveImage: this.props.canHaveImage,
       id: this.props.id,
       imageUrl: this.state.imageUrl,
       linkUrl: this.state.linkUrl,
@@ -76,6 +89,9 @@ export class Link extends React.Component<IProps, IState> {
 	}
 
   public onClickDelete() {
+    if (!this.props.canDeleteLink) {
+      return;
+    }
     this.props.handleDelete(this.props.id);
   }
 
@@ -84,7 +100,7 @@ export class Link extends React.Component<IProps, IState> {
 		return (
 			<div className="link">
 				<div className={`link-display ${(this.state.isEditing) ? 'hidden' : ''}`}>
-					<span className="link-title style5">{this.state.title}</span>
+					<span className="link-title style5">{this.state.title || '(not set)'}</span>
 					<Dropdown id={`link-submenu-${this.props.id}`} className="link-menu" pullRight={true}>
 					    <Dropdown.Toggle noCaret={true}>
 					      <img src={optionsSvg} alt="Link Menu"/>
@@ -94,12 +110,16 @@ export class Link extends React.Component<IProps, IState> {
 								<img src={editSvg} alt="Edit Link" />Edit
 							</MenuItem>
 							<MenuItem eventKey="2" className="style5" onClick={this.onClickDelete}>
-								<img src={trashSvg} alt="Remove Link" />Remove
+                {(this.props.canDeleteLink) ?
+                <span> <img src={trashSvg} alt="Remove Link" />Remove</span>
+                  :
+                  <span>Unable to remove</span>
+                }
 							</MenuItem>
 					    </Dropdown.Menu>
 					  </Dropdown>
 				</div>
-				<div className={`link-edit ${(this.state.isEditing) ? '' : 'hidden'}`}>
+				<div className={`link-edit ${(!this.state.isEditing) ? 'hidden' : ''}`}>
 					<a className="link-edit-back" onClick={this.onClickEdit}>
 						<img src={arrowLeftSvg} alt="Back" />
 					</a>

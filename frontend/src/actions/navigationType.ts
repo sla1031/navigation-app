@@ -34,7 +34,7 @@ export function getNavigationTypes(): any {
   return (dispatch: Dispatch) => {
     dispatch(navigationTypesAjaxLoadingAction(true));
     // tslint:disable-next-line
-    axios.get(`${process.env.REACT_APP_API_URL}/navigationType`)
+    axios.get(`${process.env.REACT_APP_API_URL}/navigation_type`)
       .then((res) => {
         // tslint:disable-next-line
         console.log('getNavigationTypes', res);

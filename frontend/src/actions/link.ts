@@ -90,14 +90,10 @@ export function getLinks(): any {
 
 
 export function updateLink(link: ILinkDB): any {
-  // tslint:disable-next-line
-  console.log('updateLink', `${process.env.REACT_APP_API_URL}/link/${link.id}`);
   return (dispatch: Dispatch) => {
     axios.patch(`${process.env.REACT_APP_API_URL}/link/${link.id}`, link)
       .then((res) => {
-        // tslint:disable-next-line
-        console.log('updateLink', res);
-        dispatch(updateLinkAction(res.data))
+        dispatch(updateLinkAction(res.data[0]))
       })
       .catch((err) => {
         // tslint:disable-next-line
@@ -119,6 +115,24 @@ export function deleteLink(linkId: string): any {
       .catch((err) => {
         // tslint:disable-next-line
         console.log('deleteLink', err);
+      });
+  }
+}
+
+
+export function createLink(navigationId: string): any {
+  // tslint:disable-next-line
+  console.log(`${process.env.REACT_APP_API_URL}/link`);
+  return (dispatch: Dispatch) => {
+    axios.post(`${process.env.REACT_APP_API_URL}/link`, {navigation: navigationId})
+      .then((res) => {
+        // tslint:disable-next-line
+        console.log('createLink', res);
+        dispatch(createLinkAction(res.data[0]))
+      })
+      .catch((err) => {
+        // tslint:disable-next-line
+        console.log('createLink', err);
       });
   }
 }

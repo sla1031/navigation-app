@@ -18,6 +18,12 @@
 		url(./fonts/SF-Pro-Text-Bold.ttf) format('truetype');
 }
 
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'SFProText';
+}
+
 .style1 {
   font-family: 'SFProText';
   font-weight: bold;
@@ -58,8 +64,11 @@
 	display: none;
 }
 
-body {
-  margin: 0;
-  padding: 0;
-  font-family: sans-serif;
+
+.tooltip.right .tooltip-arrow {
+  border-right-color: rgba(0,0,0,.13);
+}
+.tooltip-inner {
+  background-color: rgba(0,0,0,.13);
+  color: black
 }

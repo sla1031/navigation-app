@@ -22,3 +22,66 @@
 .navigation-add-link {
 	cursor: pointer;
 }
+
+.navigation-alert {
+  text-align: right;
+  margin: 0px 5px;
+}
+
+.navigation-type-menu-toggle {
+  cursor: pointer;
+}
+
+.navigation-type-menu-toggle img {
+  height: 15px;
+}
+
+.navigation-type-menu-toggle img.open{
+  transform: rotate(180deg);
+}
+.navigation-type-form {
+  margin: 10px;
+}
+
+.Select.navigation-type-select {
+  width: 270px;
+  font-family: 'SFProText';
+  font-size: 14px;
+  line-height: 18px;
+}
+
+.navigation-type-select .Select-control{
+  background-color: #ffffff;
+  border: 1px solid rgba(0,0,0,.3);
+  border-radius: 0px;
+  color: black;
+  height: 36px;
+  box-shadow: none;
+}
+
+.navigation-type-select:hover > .Select-control{
+  border: 1px solid rgba(0,0,0,.85);
+}
+
+.navigation-type-select.is-focused > .Select-control {
+  background-color: rgba(0,0,0,.13);
+  border: 1px solid #000000;
+  box-shadow: none;
+}
+.navigation-type-select.is-focused:not(.is-open) > .Select-control {
+  border: 1px solid rgba(0,0,0,.3);
+  box-shadow: none;
+}
+
+.navigation-type-select .Select-control .Select-input:focus {
+  background: transparent;
+}
+
+.navigation-t-select .Select-option {
+  color: black;
+}
+
+.navigation-type-select .Select-option.is-focused,
+.navigation-type-select .Select-option.is-selected {
+    background-color: #f5f5f5;
+}

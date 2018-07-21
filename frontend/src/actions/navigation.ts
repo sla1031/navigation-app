@@ -45,11 +45,8 @@ export function navigationsAjaxLoadingAction(status: boolean): INavigationsAjaxL
 export function getNavigations(): any {
   return (dispatch: Dispatch) => {
     dispatch(navigationsAjaxLoadingAction(true));
-    // tslint:disable-next-line
     axios.get(`${process.env.REACT_APP_API_URL}/navigation`)
       .then((res) => {
-         // tslint:disable-next-line
-         console.log('getNavigations', res);
         dispatch(setNavigationsAction(res.data));
         dispatch(navigationsAjaxLoadingAction(false));
       })
@@ -57,6 +54,21 @@ export function getNavigations(): any {
         // tslint:disable-next-line
         console.log('getNavigations', err);
         dispatch(navigationsAjaxLoadingAction(false));
+      });
+  }
+}
+
+export function updateNavigation(navigation: INavigationDB): any {
+  return (dispatch: Dispatch) => {
+    axios.patch(`${process.env.REACT_APP_API_URL}/navigation/${navigation.id}`, navigation)
+      .then((res) => {
+         // tslint:disable-next-line
+         console.log('updateNavigation', res);
+        dispatch(setNavigationsAction(res.data));
+      })
+      .catch((err) => {
+        // tslint:disable-next-line
+        console.log('getNavigations', err);
       });
   }
 }

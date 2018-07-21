@@ -4,6 +4,8 @@ import { Dispatch } from 'redux';
 
 
 import * as linkActions from '../actions/link';
+import * as navigationActions from '../actions/navigation';
+
 import {
   ILinkComponent,
   ILinkDB,
@@ -23,17 +25,14 @@ interface IProps {
   linksAjaxLoading: boolean;
   handleLinkUpdate(link: ILinkComponent): void;
   handleLinkDelete(linkId: string): void;
+  handleLinkNew(navigationId: string): void;
+  handleNavigationUpdate(navigation: INavigationDB): void;
 }
 
 class NavigationContainer extends React.Component<IProps> {
 	constructor(props: IProps) {
 		super(props);
 	}
-
-  public test() {
-    // tslint:disable-next-line
-    console.log('test');
-  }
 
 	public render() {
 		return (
@@ -50,7 +49,8 @@ class NavigationContainer extends React.Component<IProps> {
                 allNavigationTypes={this.props.navigationTypes}
                 handleLinkUpdate={this.props.handleLinkUpdate}
                 handleLinkDelete={this.props.handleLinkDelete}
-                handleNewLink={this.test}
+                handleLinkNew={this.props.handleLinkNew}
+                handleNavigationUpdate={this.props.handleNavigationUpdate}
               />
     				);
     			})
@@ -80,6 +80,8 @@ function convertFilterLinks(
   navigationId: string,
   canHaveImage: boolean,
 ): ILinkComponent[] {
+  // tslint:disable-next-line
+  console.log('link', links);
   return links.reduce((filtered: ILinkComponent[], link: ILinkDB) => {
     if (link.navigation === navigationId) {
       filtered.push({
@@ -122,7 +124,9 @@ function mapStateToProps(state: IStoreState, ownProps: IProps) {
 function mapDispatchToProps(dispatch: Dispatch) {
   return {
     handleLinkDelete: (linkId: string) => dispatch(linkActions.deleteLink(linkId)),
+    handleLinkNew: (navigationId: string) => dispatch(linkActions.createLink(navigationId)),
     handleLinkUpdate: (link: ILinkComponent) => dispatch(linkActions.updateLink(link)),
+    handleNavigationUpdate: (navigation: INavigationDB) => dispatch(navigationActions.updateNavigation(navigation)),
   }
 }
 
