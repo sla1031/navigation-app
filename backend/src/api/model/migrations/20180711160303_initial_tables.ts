@@ -13,7 +13,7 @@ export function up(knex: Knex): Promise<any> {
   })
   .createTable('link', (table) => {
     table.uuid('id').primary().defaultTo(knex.raw('uuid_generate_v4()'));
-    table.string('title', 45).notNullable();
+    table.string('title', 45);
     table.uuid('navigation').notNullable().references('id').inTable('navigation');
     table.string('link_url');
     table.string('image_url');

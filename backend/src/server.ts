@@ -9,7 +9,7 @@ import { navigationRouter } from './api/routes/navigation';
 import { navigationTypeRouter } from './api/routes/navigation_type';
 
 const app: express.Express = express();
-const port: number = parseInt(process.env.PORT, 10) || 3000;
+const port: number = parseInt(process.env.PORT, 10) || 4000;
 
 app.use(cors());
 app.use(parser.json());
