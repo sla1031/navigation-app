@@ -17,7 +17,7 @@ export function up(knex: Knex): Promise<any> {
     table.uuid('navigation').notNullable().references('id').inTable('navigation');
     table.string('link_url');
     table.string('image_url');
-    table.integer('order');
+    table.integer('sort');
   });
 }
 

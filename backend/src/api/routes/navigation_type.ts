@@ -8,11 +8,17 @@ export const navigationTypeRouter: express.Router = express.Router();
 navigationTypeRouter.get('/', (req: express.Request, res: express.Response) => {
   getNavigationTypes().then((navs) => {
     res.send(convertToCamelCase(navs));
+  }).catch((err)  => {
+    res.statusCode = 500;
+    res.send(err);
   });
 });
 
 navigationTypeRouter.get('/:name', (req: express.Request, res: express.Response) => {
   getNavigationTypeByName(req.params.name).then((navs) => {
     res.send(convertToCamelCase(navs));
+  }).catch((err)  => {
+    res.statusCode = 500;
+    res.send(err);
   });
 });

@@ -4,12 +4,12 @@ type link = {
   title?: string;
   link_url?: string;
   image_url?: string;
-  order?: number;
+  sort?: number;
   navigation?: string;
 };
 
 export function getLinksByNavigation(navigation: string) {
-  return knex('link').select().where({ navigation }).orderBy('order');
+  return knex('link').select().where({ navigation }).orderBy('sort');
 }
 
 export function getLinkByID(id: string) {
@@ -17,7 +17,7 @@ export function getLinkByID(id: string) {
 }
 
 export function getLinks() {
-  return knex('link').select().orderBy('navigation', 'order');
+  return knex('link').select().orderBy('navigation', 'asc').orderBy('sort', 'asc');
 }
 
 export function updateLink(id: string, updatedLink: link) {
