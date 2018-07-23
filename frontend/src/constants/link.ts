@@ -13,5 +13,8 @@ export type SET_LINKS = typeof SET_LINKS;
 export const RESORT_LINK = 'RESORT_LINK';
 export type RESORT_LINK = typeof RESORT_LINK;
 
+export const REMOVE_LINKS_IMAGE = 'REMOVE_LINKS_IMAGE';
+export type REMOVE_LINKS_IMAGE = typeof REMOVE_LINKS_IMAGE;
+
 export const LINKS_AJAX_LOADING = 'LINKS_AJAX_LOADING';
 export type LINKS_AJAX_LOADING = typeof LINKS_AJAX_LOADING;

@@ -5,6 +5,7 @@ import {
   CREATE_LINK,
   DELETE_LINK,
   LINKS_AJAX_LOADING,
+  REMOVE_LINKS_IMAGE,
   RESORT_LINK,
   SET_LINKS,
   UPDATE_LINK,
@@ -99,8 +100,6 @@ export function linkReducer(state: ILinkDB[] = initialState.links, action: ILink
 				return link.id === action.linkId;
 			});
       const oldLink = newState[indexToDelete];
-      // tslint:disable-next-line
-      console.log('oldLink', oldLink);
 			newState.splice(indexToDelete, 1);
       const fakeLinkForSort = {
         id: 'na',
@@ -112,11 +111,25 @@ export function linkReducer(state: ILinkDB[] = initialState.links, action: ILink
       // resort rest of links
       newState = reSortLinks(newState, fakeLinkForSort, oldLink);
 			return newState;
-			return newState;
 		}
 		case SET_LINKS: {
 			return action.links;
 		}
+    case REMOVE_LINKS_IMAGE: {
+      newState = [
+        ...state,
+      ];
+      return newState.map((link) => {
+        if (link.navigation === action.navigation.id) {
+          return {
+            ...link,
+            imageUrl: undefined,
+          }
+        }
+        return link;
+      });
+			return newState;
+    }
 		default:
 			return state;
 	}

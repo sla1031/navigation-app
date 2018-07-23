@@ -25,7 +25,7 @@ interface Iprops {
   handleLinkUpdate(link: ILinkPatch): void;
   handleLinkReSort(link: ILinkPatch): void;
   handleLinkDelete(linkId: string): void;
-  handleNavigationUpdate(navigation: INavigationDB): void;
+  handleNavigationUpdate(navigation: INavigationDB, navigationType: INavigationType): void;
 }
 
 interface Istate {
@@ -64,10 +64,15 @@ export class Navigation extends React.Component<Iprops, Istate> {
     if(event.key === this.props.navigationTypeName) {
       return;
     }
-    this.props.handleNavigationUpdate({
-      id: this.props.id,
-      navigationType: event.key,
-    });
+    this.props.handleNavigationUpdate(
+      {
+        id: this.props.id,
+        navigationType: event.key,
+      },
+      this.props.allNavigationTypes.find((type) => {
+        return type.name === event.key;
+      }) || this.props.navigationType,
+    );
   }
 
   public selectArrow(){

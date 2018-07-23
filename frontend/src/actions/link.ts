@@ -2,7 +2,7 @@ import axios from 'axios';
 import { Dispatch } from 'redux';
 
 import * as constants from '../constants/link';
-import { ILinkDB, ILinkPatch } from '../types/';
+import { ILinkDB, ILinkPatch, INavigationDB } from '../types/';
 
 export interface ICreateLinkAction {
   link: ILinkDB;
@@ -29,12 +29,18 @@ export interface ISetLinksAction {
   type: constants.SET_LINKS;
 }
 
+export interface IRemoveLinkImageAction {
+  navigation: INavigationDB;
+  type: constants.REMOVE_LINKS_IMAGE;
+}
+
 export type ILinkActionType =
   IDeleteLinkAction |
   ICreateLinkAction |
   IUpdateLinkAction |
   IReSortLinkAction |
-  ISetLinksAction;
+  ISetLinksAction |
+  IRemoveLinkImageAction;
 
 export interface ILinksAjaxLoadingAction {
   status: boolean;
@@ -75,6 +81,13 @@ export function setLinksAction(links: ILinkDB[]): ISetLinksAction {
   return {
     links,
     type: constants.SET_LINKS,
+  }
+}
+
+export function removeLinkImageAction(navigation: INavigationDB): IRemoveLinkImageAction {
+  return {
+    navigation,
+    type: constants.REMOVE_LINKS_IMAGE,
   }
 }
 

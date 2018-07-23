@@ -1,7 +1,10 @@
 import axios from 'axios';
 import { Dispatch } from 'redux';
+
 import * as constants from '../constants/navigation';
-import { INavigationDB } from '../types';
+import { INavigationDB, INavigationType } from '../types';
+
+import { removeLinkImageAction } from './link';
 
 export interface ISetNavigationsAction {
     navigations: INavigationDB[];
@@ -58,17 +61,24 @@ export function getNavigations(): any {
   }
 }
 
-export function updateNavigation(navigation: INavigationDB): any {
+export function updateNavigation(navigation: INavigationDB, navigationType: INavigationType): any {
+  // so the db doesn't try to update id
+  const updatedNavigation = {
+    ...navigation,
+  };
+  delete updatedNavigation.id;
   return (dispatch: Dispatch) => {
-    axios.patch(`${process.env.REACT_APP_API_URL}/navigation/${navigation.id}`, navigation)
+
+    axios.patch(`${process.env.REACT_APP_API_URL}/navigation/${navigation.id}`, updatedNavigation)
       .then((res) => {
-         // tslint:disable-next-line
-         console.log('updateNavigation', res);
         dispatch(setNavigationsAction(res.data));
+        if (!navigationType.hasImage) {
+          dispatch(removeLinkImageAction(navigation));
+        }
       })
       .catch((err) => {
         // tslint:disable-next-line
-        console.log('getNavigations', err);
+        console.log('updateNavigation', err);
       });
   }
 }

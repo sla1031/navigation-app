@@ -5,6 +5,15 @@
 	border-radius: 2px;
   margin-bottom: 10px;
 }
+.link:not(.editing):hover {
+  border: 1px solid rgba(0,0,0,.85);
+}
+
+.drag-active .link {
+  background-color: #dedede;
+  box-shadow: 0px 10px 20px 0px rgba(0,0,0,0.19), 0px 6px 6px 0px rgba(0,0,0,0.26);
+
+}
 
 .link-display {
 	padding: 0 0 0 10px;
@@ -12,6 +21,11 @@
 
 .link-title {
   font-weight: bold;
+  max-width: 272px;
+  overflow: hidden;
+  display: inline-block;
+  text-overflow: ellipsis;
+  vertical-align: middle;
 }
 
 .link-menu {
@@ -19,7 +33,7 @@
   margin-right: 5px;
 }
 .link-menu img {
-	height: 20px;
+	height: 18px;
 }
 
 .link-menu .btn-default.dropdown-toggle {
@@ -85,4 +99,11 @@
 
 .link-edit-form {
  	width: stretch;
+}
+
+
+.link-edit-form .form-control:focus {
+  border: 1px solid #0067f7;
+  box-shadow: none;
+  border-radius: 0;
 }

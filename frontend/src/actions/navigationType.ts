@@ -40,6 +40,8 @@ export function getNavigationTypes(): any {
         dispatch(navigationTypesAjaxLoadingAction(false));
       })
       .catch((err) => {
+        // tslint:disable-next-line
+        console.log('getNavigationTypes', err);
         dispatch(navigationTypesAjaxLoadingAction(false));
       });
   }

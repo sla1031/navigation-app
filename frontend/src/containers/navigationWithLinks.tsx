@@ -128,7 +128,7 @@ function mapDispatchToProps(dispatch: Dispatch) {
     handleLinkNew: (link: ILinkPatch) => dispatch(linkActions.createLink(link)),
     handleLinkReSort: (link: ILinkPatch) => dispatch(linkActions.reSortLink(link)),
     handleLinkUpdate: (link: ILinkPatch) => dispatch(linkActions.updateLink(link)),
-    handleNavigationUpdate: (navigation: INavigationDB) => dispatch(navigationActions.updateNavigation(navigation)),
+    handleNavigationUpdate: (navigation: INavigationDB, navigationType: INavigationType) => dispatch(navigationActions.updateNavigation(navigation, navigationType)),
   }
 }
 

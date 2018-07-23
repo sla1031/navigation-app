@@ -5,16 +5,13 @@ import './App.css';
 
 import { NavigationPage } from './containers/navigationWithLinks';
 
-import logoSvg from './logo.svg';
-
 class App extends React.Component {
   public render() {
     return (
       <Router>
         <div className="App">
           <header className="App-header">
-            <img src={logoSvg} className="App-logo" alt="logo" />
-            <h1 className="App-title">Welcome to React</h1>
+            <h1 className="style1">Navigation Management</h1>
           </header>
           <Route path="/" component={NavigationPage} />
         </div>

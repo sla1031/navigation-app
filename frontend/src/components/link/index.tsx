@@ -1,9 +1,6 @@
 import * as React from 'react';
 import {
   DragDropContext,
-  Draggable,
-  DraggableProvided,
-  DraggableStateSnapshot,
   Droppable,
   DroppableProvided,
   DroppableStateSnapshot,
@@ -82,27 +79,14 @@ export class LinkList extends React.Component<IProps, IState> {
                 >
         			   {this.state.links.map((link, index) => {
         				    return (
-                      <Draggable key={link.id} draggableId={link.id} index={index}>
-                        {(dragProvided: DraggableProvided, dragSnapshot: DraggableStateSnapshot) => {
-                          return (
-                            <div
-                              ref={dragProvided.innerRef}
-                              {...dragProvided.draggableProps}
-                              {...dragProvided.dragHandleProps}
-                              style={dragProvided.draggableProps.style}
-                              className={(dragSnapshot.isDragging) ? 'drag-active' : ''}
-                            >
-                              <Link
-                                key={link.id}
-                                {...link}
-                                canDeleteLink={this.props.canDeleteLinks}
-                              	handleDelete={this.props.handleDelete}
-                                handleUpdate={this.props.handleUpdate}
-                    					/>
-                            </div>
-                          )
-                        }}
-                      </Draggable>
+                      <Link
+                        dragIndex={index}
+                        key={link.id}
+                        {...link}
+                        canDeleteLink={this.props.canDeleteLinks}
+                      	handleDelete={this.props.handleDelete}
+                        handleUpdate={this.props.handleUpdate}
+            					/>
         			      );
         			    })}
                 </div>
