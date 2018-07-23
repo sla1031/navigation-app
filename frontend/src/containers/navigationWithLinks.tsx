@@ -9,6 +9,7 @@ import * as navigationActions from '../actions/navigation';
 import {
   ILinkComponent,
   ILinkDB,
+  ILinkPatch,
   INavigationComponent,
   INavigationDB,
   INavigationType,
@@ -23,9 +24,10 @@ interface IProps {
   navigationTypes: INavigationType[];
   navigationTypesAjaxLoading: boolean;
   linksAjaxLoading: boolean;
-  handleLinkUpdate(link: ILinkComponent): void;
   handleLinkDelete(linkId: string): void;
-  handleLinkNew(navigationId: string): void;
+  handleLinkNew(link: ILinkPatch): void;
+  handleLinkReSort(link: ILinkPatch): void;
+  handleLinkUpdate(link: ILinkPatch): void;
   handleNavigationUpdate(navigation: INavigationDB): void;
 }
 
@@ -47,9 +49,10 @@ class NavigationContainer extends React.Component<IProps> {
                 key={navigation.id}
                 {...navigation}
                 allNavigationTypes={this.props.navigationTypes}
-                handleLinkUpdate={this.props.handleLinkUpdate}
-                handleLinkDelete={this.props.handleLinkDelete}
                 handleLinkNew={this.props.handleLinkNew}
+                handleLinkDelete={this.props.handleLinkDelete}
+                handleLinkUpdate={this.props.handleLinkUpdate}
+                handleLinkReSort={this.props.handleLinkReSort}
                 handleNavigationUpdate={this.props.handleNavigationUpdate}
               />
     				);
@@ -80,8 +83,6 @@ function convertFilterLinks(
   navigationId: string,
   canHaveImage: boolean,
 ): ILinkComponent[] {
-  // tslint:disable-next-line
-  console.log('link', links);
   return links.reduce((filtered: ILinkComponent[], link: ILinkDB) => {
     if (link.navigation === navigationId) {
       filtered.push({
@@ -124,8 +125,9 @@ function mapStateToProps(state: IStoreState, ownProps: IProps) {
 function mapDispatchToProps(dispatch: Dispatch) {
   return {
     handleLinkDelete: (linkId: string) => dispatch(linkActions.deleteLink(linkId)),
-    handleLinkNew: (navigationId: string) => dispatch(linkActions.createLink(navigationId)),
-    handleLinkUpdate: (link: ILinkComponent) => dispatch(linkActions.updateLink(link)),
+    handleLinkNew: (link: ILinkPatch) => dispatch(linkActions.createLink(link)),
+    handleLinkReSort: (link: ILinkPatch) => dispatch(linkActions.reSortLink(link)),
+    handleLinkUpdate: (link: ILinkPatch) => dispatch(linkActions.updateLink(link)),
     handleNavigationUpdate: (navigation: INavigationDB) => dispatch(navigationActions.updateNavigation(navigation)),
   }
 }

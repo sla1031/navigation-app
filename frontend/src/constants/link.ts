@@ -10,6 +10,8 @@ export type DELETE_LINK = typeof DELETE_LINK;
 export const SET_LINKS = 'SET_LINKS';
 export type SET_LINKS = typeof SET_LINKS;
 
+export const RESORT_LINK = 'RESORT_LINK';
+export type RESORT_LINK = typeof RESORT_LINK;
 
 export const LINKS_AJAX_LOADING = 'LINKS_AJAX_LOADING';
 export type LINKS_AJAX_LOADING = typeof LINKS_AJAX_LOADING;

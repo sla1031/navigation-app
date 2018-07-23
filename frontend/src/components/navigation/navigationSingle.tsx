@@ -9,7 +9,7 @@ import {
 import Select from 'react-select';
 import 'react-select/dist/react-select.css';
 
-import { ILinkComponent, INavigationDB, INavigationType } from '../../types';
+import { ILinkComponent, ILinkPatch, INavigationDB, INavigationType } from '../../types';
 import { LinkList } from '../link';
 
 import descendSvg from '../../images/descend.svg';
@@ -21,8 +21,9 @@ interface Iprops {
   links: ILinkComponent[];
 	allNavigationTypes: INavigationType[];
   navigationType: INavigationType;
-	handleLinkNew(navigationId: string): void;
-  handleLinkUpdate(link: ILinkComponent): void;
+	handleLinkNew(link: ILinkPatch): void;
+  handleLinkUpdate(link: ILinkPatch): void;
+  handleLinkReSort(link: ILinkPatch): void;
   handleLinkDelete(linkId: string): void;
   handleNavigationUpdate(navigation: INavigationDB): void;
 }
@@ -45,7 +46,12 @@ export class Navigation extends React.Component<Iprops, Istate> {
   }
 
 	public onClickNew() {
-		this.props.handleLinkNew(this.props.id);
+		this.props.handleLinkNew(
+      {
+        navigation: this.props.id,
+        sort: this.props.links.length,
+      },
+    );
 	}
 
   public onNavigationSlideClick() {
@@ -74,10 +80,7 @@ export class Navigation extends React.Component<Iprops, Istate> {
     const { maxLength, minLength } = this.props.navigationType;
     const numberLinks = this.props.links.length;
 
-    // tslint:disable-next-line
-    console.log(`numberLinks ${numberLinks} minLength ${minLength} maxLength ${maxLength}`);
-
-    const minAlert = numberLinks - 1 < minLength && numberLinks !== 1;
+    const minAlert = numberLinks - 1 < minLength && minLength !== 0;
     const maxAlert = numberLinks + 1 > maxLength;
     const tooltipAlert = (
       <Tooltip id={`tooltip-navigation-alert-${this.props.id}`}>
@@ -139,9 +142,11 @@ export class Navigation extends React.Component<Iprops, Istate> {
                 (this.props.links.length) ?
                 <LinkList
                   links={this.props.links}
-                  handleUpdate={this.props.handleLinkUpdate}
-                  handleDelete={this.props.handleLinkDelete}
                   canDeleteLinks={!minAlert}
+                  id={this.props.id}
+                  handleUpdate={this.props.handleLinkUpdate}
+                  handleReSort={this.props.handleLinkReSort}
+                  handleDelete={this.props.handleLinkDelete}
                 />
                 :
                 <p>No links added to this navigation</p>

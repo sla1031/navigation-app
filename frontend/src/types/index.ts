@@ -25,7 +25,16 @@ export interface ILinkDB {
     navigation: string;
     linkUrl: string;
     imageUrl?: string;
-    order: number;
+    sort: number;
+}
+
+export interface ILinkPatch {
+  id?: string;
+  navigation?: string;
+  title?: string;
+  linkUrl?: string;
+  imageUrl?: string;
+  sort?: number;
 }
 
 

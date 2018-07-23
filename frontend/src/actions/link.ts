@@ -2,7 +2,7 @@ import axios from 'axios';
 import { Dispatch } from 'redux';
 
 import * as constants from '../constants/link';
-import { ILinkDB } from '../types/';
+import { ILinkDB, ILinkPatch } from '../types/';
 
 export interface ICreateLinkAction {
   link: ILinkDB;
@@ -10,8 +10,13 @@ export interface ICreateLinkAction {
 }
 
 export interface IUpdateLinkAction {
-  link: ILinkDB;
+  link: ILinkPatch;
   type: constants.UPDATE_LINK;
+}
+
+export interface IReSortLinkAction {
+  link: ILinkPatch;
+  type: constants.RESORT_LINK;
 }
 
 export interface IDeleteLinkAction {
@@ -24,7 +29,12 @@ export interface ISetLinksAction {
   type: constants.SET_LINKS;
 }
 
-export type ILinkActionType = IDeleteLinkAction | ICreateLinkAction | IUpdateLinkAction | ISetLinksAction;
+export type ILinkActionType =
+  IDeleteLinkAction |
+  ICreateLinkAction |
+  IUpdateLinkAction |
+  IReSortLinkAction |
+  ISetLinksAction;
 
 export interface ILinksAjaxLoadingAction {
   status: boolean;
@@ -40,10 +50,17 @@ export function createLinkAction(link: ILinkDB): ICreateLinkAction {
   }
 }
 
-export function updateLinkAction(link: ILinkDB): IUpdateLinkAction {
+export function updateLinkAction(link: ILinkPatch): IUpdateLinkAction {
   return {
     link,
     type: constants.UPDATE_LINK,
+  }
+}
+
+export function reSortLinkAction(link: ILinkPatch): IReSortLinkAction {
+  return {
+    link,
+    type: constants.RESORT_LINK,
   }
 }
 
@@ -72,11 +89,8 @@ export function linksAjaxLoadingAction(status: boolean): ILinksAjaxLoadingAction
 export function getLinks(): any {
   return (dispatch: Dispatch) => {
     dispatch(linksAjaxLoadingAction(true));
-    // tslint:disable-next-line
     axios.get(`${process.env.REACT_APP_API_URL}/link`)
       .then((res) => {
-        // tslint:disable-next-line
-        console.log('getLinks', res);
         dispatch(setLinksAction(res.data));
         dispatch(linksAjaxLoadingAction(false));
       })
@@ -89,11 +103,16 @@ export function getLinks(): any {
 }
 
 
-export function updateLink(link: ILinkDB): any {
+export function updateLink(link: ILinkPatch): any {
   return (dispatch: Dispatch) => {
-    axios.patch(`${process.env.REACT_APP_API_URL}/link/${link.id}`, link)
+    // so the db doesn't try to update id
+    const updatedLink = {
+      ...link,
+    };
+    delete updatedLink.id;
+    axios.patch(`${process.env.REACT_APP_API_URL}/link/${link.id}`, updatedLink)
       .then((res) => {
-        dispatch(updateLinkAction(res.data[0]))
+        dispatch(updateLinkAction(res.data[0]));
       })
       .catch((err) => {
         // tslint:disable-next-line
@@ -103,14 +122,10 @@ export function updateLink(link: ILinkDB): any {
 }
 
 export function deleteLink(linkId: string): any {
-  // tslint:disable-next-line
-  console.log('deleteLink', `${process.env.REACT_APP_API_URL}/link/${linkId}`);
   return (dispatch: Dispatch) => {
     axios.delete(`${process.env.REACT_APP_API_URL}/link/${linkId}`)
       .then((res) => {
-        // tslint:disable-next-line
-        console.log('deleteLink', res);
-        dispatch(deleteLinkAction(linkId))
+        dispatch(deleteLinkAction(linkId));
       })
       .catch((err) => {
         // tslint:disable-next-line
@@ -120,19 +135,33 @@ export function deleteLink(linkId: string): any {
 }
 
 
-export function createLink(navigationId: string): any {
-  // tslint:disable-next-line
-  console.log(`${process.env.REACT_APP_API_URL}/link`);
+export function createLink(link: ILinkPatch):any {
   return (dispatch: Dispatch) => {
-    axios.post(`${process.env.REACT_APP_API_URL}/link`, {navigation: navigationId})
+    axios.post(`${process.env.REACT_APP_API_URL}/link`, link)
       .then((res) => {
-        // tslint:disable-next-line
-        console.log('createLink', res);
-        dispatch(createLinkAction(res.data[0]))
+        dispatch(createLinkAction(res.data[0]));
       })
       .catch((err) => {
         // tslint:disable-next-line
         console.log('createLink', err);
+      });
+  }
+}
+
+export function reSortLink(link: ILinkPatch): any {
+  return (dispatch: Dispatch) => {
+    // so the db doesn't try to update id
+    const updatedLink = {
+      ...link,
+    };
+    delete updatedLink.id;
+    axios.patch(`${process.env.REACT_APP_API_URL}/link/${link.id}`, updatedLink)
+      .then((res) => {
+        dispatch(reSortLinkAction(res.data[0]));
+      })
+      .catch((err) => {
+        // tslint:disable-next-line
+        console.log('reSortLinks', err);
       });
   }
 }

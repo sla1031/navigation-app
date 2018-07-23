@@ -36,14 +36,10 @@ export function getNavigationTypes(): any {
     // tslint:disable-next-line
     axios.get(`${process.env.REACT_APP_API_URL}/navigation_type`)
       .then((res) => {
-        // tslint:disable-next-line
-        console.log('getNavigationTypes', res);
         dispatch(setNavigationTypesAction(res.data));
         dispatch(navigationTypesAjaxLoadingAction(false));
       })
       .catch((err) => {
-        // tslint:disable-next-line
-        console.log('getNavigationTypes', err);
         dispatch(navigationTypesAjaxLoadingAction(false));
       });
   }

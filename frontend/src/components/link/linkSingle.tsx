@@ -7,7 +7,7 @@ import {
 	MenuItem,
 } from 'react-bootstrap';
 
-import { ILinkDB } from '../../types';
+import { ILinkPatch } from '../../types';
 
 import arrowLeftSvg from '../../images/arrow-left.svg';
 import editSvg from '../../images/edit.svg';
@@ -21,11 +21,11 @@ interface IProps {
 	navigation: string;
 	linkUrl: string;
 	imageUrl?: string;
-	order: number;
+	sort: number;
 	canHaveImage: boolean;
   canDeleteLink: boolean;
 	handleDelete(linkId: string): void;
-  handleUpdate(link: ILinkDB): void;
+  handleUpdate(link: ILinkPatch): void;
 }
 
 interface IState {
@@ -82,8 +82,6 @@ export class Link extends React.Component<IProps, IState> {
       id: this.props.id,
       imageUrl: this.state.imageUrl,
       linkUrl: this.state.linkUrl,
-      navigation: this.props.navigation,
-      order: this.props.order,
       title: this.state.title,
     });
 	}
@@ -130,7 +128,7 @@ export class Link extends React.Component<IProps, IState> {
 							<FormControl
 								name="title"
 								type="text"
-								value={this.state.title}
+								defaultValue={this.state.title || undefined}
 							/>
 						</FormGroup>
 						<FormGroup>
@@ -138,7 +136,7 @@ export class Link extends React.Component<IProps, IState> {
 							<FormControl
 								name="linkUrl"
 								type="text"
-								value={this.state.linkUrl}
+								defaultValue={this.state.linkUrl || undefined}
 							/>
 						</FormGroup>
 						{this.props.canHaveImage && (
@@ -147,7 +145,7 @@ export class Link extends React.Component<IProps, IState> {
 								<FormControl
 									name="imageUrl"
 									type="text"
-									value={this.state.imageUrl}
+									defaultValue={this.state.imageUrl || undefined}
 								/>
 							</FormGroup>
 						)}
