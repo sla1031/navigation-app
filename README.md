@@ -22,7 +22,7 @@ When starting with a clean database, the script `setupDB` is available. This wil
 ```
 $ yarn setupDB
 ```
-The following command will start an express server on point 4000 if `PORT` is not set in `.env`
+The following command will start an express server on port 4000 if `PORT` is not set in `.env`
 ```
 $ yarn start
 ```
@@ -32,7 +32,7 @@ $ yarn start
 ```
 REACT_APP_API_URL = ''
 ```
-The frontend is build with using create-react-app and Typescript. The following create-react-app scripts are available
+The frontend is built using create-react-app and Typescript. The following create-react-app scripts are available
 ```
 $ yarn start;
 $ yarn build;
